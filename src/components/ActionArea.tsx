@@ -4,7 +4,12 @@ import { AwayOrHome } from "../models/team";
 
 interface ActionAreaProps {
   game: Game;
-  onPlay: (batterGuess: number, pitcherGuess: number) => void;
+  onPlay: (
+    batterGuess: number,
+    pitcherGuess: number,
+    batter: any,
+    pitcher: any
+  ) => void;
 }
 
 export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
@@ -25,9 +30,29 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
 
   useEffect(() => {
     if (isFormSubmitted) {
-      onPlay(+battersGuessInput, pitchersGuessInput);
+      onPlay(
+        +battersGuessInput,
+        pitchersGuessInput,
+        currentBatter(),
+        currentPitcher()
+      );
     }
   }, [isFormSubmitted]);
+
+  const currentBatter = () => {
+    if (game.batting_team === AwayOrHome.AWAY) {
+      console.log(game.away_team.lineup[game.away_team.at_bat]);
+      return game.away_team.lineup[game.away_team.at_bat];
+    }
+    return game.home_team.lineup[game.home_team.at_bat];
+  };
+  const currentPitcher = () => {
+    if (game.batting_team === AwayOrHome.AWAY) {
+      console.log(game.home_team.pitcher);
+      return game.home_team.pitcher;
+    }
+    return game.away_team.pitcher;
+  };
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,7 +100,7 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
               value={battersGuessInput}
               onChange={handleBatterGuessInput}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={!isFormSubmitted}
+              disabled={isFormSubmitted}
               required
             />
             {battersGuessError && (
@@ -104,7 +129,6 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
           <button
             className="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm z-[1000] disabled:bg-gray-300"
             type="submit"
-            disabled={!isFormSubmitted}
             hidden={game.is_over}
           >
             {!isFormSubmitted ? "Start At-Bat" : "Next At-Bat"}

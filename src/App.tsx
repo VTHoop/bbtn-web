@@ -7,6 +7,8 @@ import { Scoreboard } from "./components/Scoreboard";
 interface AtBat {
   pitcherGuess: number;
   batterGuess: number;
+  batter: any;
+  pitcher: any;
 }
 
 const App = () => {
@@ -15,15 +17,22 @@ const App = () => {
   const [atBat, setAtBat] = useState<AtBat>({
     pitcherGuess: -1,
     batterGuess: -1,
+    batter: null,
+    pitcher: null,
   });
 
-  const handlePlay = (batterGuess: number, pitcherGuess: number) => {
-    setAtBat({ pitcherGuess, batterGuess });
+  const handlePlay = (
+    batterGuess: number,
+    pitcherGuess: number,
+    batter: any,
+    pitcher: any
+  ) => {
+    setAtBat({ pitcherGuess, batterGuess, batter, pitcher });
   };
 
   useEffect(() => {
     const url =
-      "http://localhost:8000/games/da4b561e-cbfd-4490-a79c-6e03a4cd1ee9";
+      "http://localhost:8000/games/e7916921-daa0-47ac-a713-57cbea2e7c24";
     const options = {
       method: "GET",
       headers: {
@@ -39,17 +48,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const { batterGuess, pitcherGuess } = atBat;
+    const { batterGuess, pitcherGuess, batter, pitcher } = atBat;
     if (batterGuess !== -1 && pitcherGuess !== -1) {
       const url =
-        "http://localhost:8000/games/da4b561e-cbfd-4490-a79c-6e03a4cd1ee9/at-bat";
+        "http://localhost:8000/games/e7916921-daa0-47ac-a713-57cbea2e7c24/at-bat";
       const options = {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
         },
-        body: JSON.stringify({ batterGuess, pitcherGuess }),
+        body: JSON.stringify({ batterGuess, pitcherGuess, batter, pitcher }),
       };
       fetch(url, options)
         .then((response) => response.json())
