@@ -13,7 +13,10 @@ interface ActionAreaProps {
 }
 
 export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
-  const [pitchersGuessInput, setPitchersGuessInput] = useState<number>(-1);
+  const [pitchersGuessInput, setPitchersGuessInput] = useState<string>("");
+  const [pitchersGuessError, setpitchersGuessError] = useState<string | null>(
+    null
+  );
 
   const [battersGuessInput, setBattersGuessInput] = useState<string>("");
   const [battersGuessError, setbattersGuessError] = useState<string | null>(
@@ -28,11 +31,18 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
     setBattersGuessInput(value);
   };
 
+  const handlePitcherGuessInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setPitchersGuessInput(value);
+  };
+
   useEffect(() => {
     if (isFormSubmitted) {
       onPlay(
         +battersGuessInput,
-        pitchersGuessInput,
+        +pitchersGuessInput,
         currentBatter(),
         currentPitcher()
       );
@@ -59,17 +69,30 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
     if (isFormSubmitted) {
       setIsFormSubmitted(false);
       setBattersGuessInput("");
-      setPitchersGuessInput(-1);
+      setPitchersGuessInput("");
     } else {
-      if (+battersGuessInput >= 0 && +battersGuessInput <= 1000) {
-        setbattersGuessError(null);
-        setPitchersGuessInput(Math.floor(Math.random() * 1001));
-        setIsFormSubmitted(true);
+      if (pitchersGuessInput === "") {
+        if (isUserInputValid(battersGuessInput)) {
+          setbattersGuessError(null);
+          setPitchersGuessInput(Math.floor(Math.random() * 1001).toString());
+          setIsFormSubmitted(true);
+        } else {
+          setbattersGuessError("Guess must be a number between 0 and 1000");
+        }
       } else {
-        setbattersGuessError("Guess must be a number between 0 and 1000");
+        if (isUserInputValid(pitchersGuessInput)) {
+          setpitchersGuessError(null);
+          setBattersGuessInput(Math.floor(Math.random() * 1001).toString());
+          setIsFormSubmitted(true);
+        } else {
+          setpitchersGuessError("Guess must be a number between 0 and 1000");
+        }
       }
     }
   };
+
+  const isUserInputValid = (input: string): boolean =>
+    +input >= 0 && +input <= 1000 ? true : false;
 
   return (
     <form
@@ -87,29 +110,33 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
               {game.outs} {game.outs === 1 ? "Out" : "Outs"}
             </div>
           </div>
-          <div className="relative z-[1000]">
-            <label
-              htmlFor="batters-guess"
-              className="block mb-2 text-sm font-medium text-gray-900 text-center"
-            >
-              Batter Guess
-            </label>
-            <input
-              type="text"
-              id="batters-guess"
-              value={battersGuessInput}
-              onChange={handleBatterGuessInput}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={isFormSubmitted}
-              required
-            />
-            {battersGuessError && (
-              <div className="text-red-700 text-xs text-center">
-                {battersGuessError}
-              </div>
-            )}
-          </div>
-          {pitchersGuessInput !== -1 && (
+          {(battersGuessInput !== "" ||
+            game.batting_team === AwayOrHome.HOME) && (
+            <div className="relative z-[1000]">
+              <label
+                htmlFor="batters-guess"
+                className="block mb-2 text-sm font-medium text-gray-900 text-center"
+              >
+                Batter Guess
+              </label>
+              <input
+                type="text"
+                id="batters-guess"
+                value={battersGuessInput}
+                onChange={handleBatterGuessInput}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                disabled={isFormSubmitted}
+              />
+              {battersGuessError && (
+                <div className="text-red-700 text-xs text-center">
+                  {battersGuessError}
+                </div>
+              )}
+            </div>
+          )}
+
+          {(pitchersGuessInput !== "" ||
+            game.batting_team === AwayOrHome.AWAY) && (
             <div className="relative z-[1000]">
               <label
                 htmlFor="pitchers-guess"
@@ -120,10 +147,16 @@ export const ActionArea = ({ game, onPlay }: ActionAreaProps) => {
               <input
                 type="text"
                 id="pitchers-guess"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={pitchersGuessInput}
-                readOnly
+                onChange={handlePitcherGuessInput}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                disabled={isFormSubmitted}
               />
+              {pitchersGuessError && (
+                <div className="text-red-700 text-xs text-center">
+                  {pitchersGuessError}
+                </div>
+              )}
             </div>
           )}
           <button

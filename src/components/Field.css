@@ -1,9 +1,9 @@
 #field{ 
     position:absolute;
-    top:calc(-110px + var(--scoreboard-size));
-    left:145px;
-    height:700px;
-    width:700px;
+    top:calc(-55px + var(--scoreboard-size));
+    left:315px;
+    height:350px;
+    width:350px;
     border-radius:1% 100% 1% 1%;
     border:1px solid green;
     background-color:green;
@@ -11,10 +11,10 @@
 }
 #in-field{ 
     position:absolute;
-    top:calc(170px + var(--scoreboard-size));
-    left:265px;
-    height:450px;
-    width:450px;
+    top:calc(85px + var(--scoreboard-size));
+    left:378px;
+    height:225px;
+    width:225px;
     border-radius:1% 50% 1% 1%;
     border:1px solid #836539; /*#9b7653; */
     background-color:#836539; /*#9b7653;*/
@@ -22,20 +22,20 @@
 }
 #base-lines{
     position:absolute;
-    top: calc(-120px + var(--scoreboard-size));
-    left: 155px;
-    height:670px;
-    width:670px;
+    top: calc(-60px + var(--scoreboard-size));
+    left: 322px;
+    height:335px;
+    width:335px;
     border-left:2px solid white;
     border-bottom:2px solid white;
     -webkit-transform: rotate(-45deg);
 }
 #in-field-grass{
     position:absolute;
-    top: calc(330px + var(--scoreboard-size));
-    left: 359px;
-    height:260px;
-    width:260px;
+    top: calc(165px + var(--scoreboard-size));
+    left: 424px;
+    height:130px;
+    width:130px;
     border:2px solid green;
     background-color:green;
     -webkit-transform: rotate(-45deg);
@@ -53,41 +53,37 @@
   background-color: orange;
 }
 #first-base{
-    top:calc(450px + var(--scoreboard-size));
-    left:706px;
+    top:calc(225px + var(--scoreboard-size));
+    left:584px;
 }
 #second-base{
-    top:calc(231px + var(--scoreboard-size));
+    top:calc(115px + var(--scoreboard-size));
     left:484px;
 }
 #thrid-base{
-    top:calc(450px + var(--scoreboard-size));
-    left:262px;
+    top:calc(225px + var(--scoreboard-size));
+    left:380px;
 }
-#home-plate{
+#home-plate {
+    content:"";
+    background:#fff;
+    height:14px;
+    width:14px;
     position:absolute;
-    height:7px;
-    width:13px;
-    top:calc(678px + var(--scoreboard-size));
-    left:485px;
-    border:1px solid white;
-    background-color:white;
-}
-#home-plate:before, #home-plate:after{
-	top: 100%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-#home-plate:before{
-	border-top-color:white;
-	border-width: 8px;
-	left: 50%;
-	margin-left: -9.5px;
-}
+    left:483px;
+    top:calc(328px + var(--scoreboard-size));
+    transform:rotate(45deg);}
+  
+  #home-plate:before {
+    content: "";
+    background: #fff;
+    height: 14px;
+    width: 12px;
+    position: absolute;
+    left: -0.3vw;
+    bottom: 0.4vw;
+    transform: rotate(45deg);
+  }
 .home-plate-pulse{
     /* Copy position attributes from #home-plate.
        Needs to be separate to allow batters boxes to cover edges of home plate */
@@ -99,10 +95,10 @@
 }
 #pitchers-mound{ 
     position:absolute;
-    top:calc(420px + var(--scoreboard-size));
-    left:450px;
-    height:80px;
-    width:80px;
+    top:calc(210px + var(--scoreboard-size));
+    left:470px;
+    height:40px;
+    width:40px;
     border-radius:100% 100% 100% 100%;
     -webkit-transform: rotate(-45deg);
      border:1px solid #836539;
@@ -110,10 +106,10 @@
 }
 #pitchers-plate{ 
     position:absolute;
-    top:calc(458px + var(--scoreboard-size));
-    left:482px;
+    top:calc(228px + var(--scoreboard-size));
+    left:484px;
     height:5px;
-    width:16px;
+    width:12px;
     border:1px solid white;
     background-color:white;
 }
@@ -134,17 +130,17 @@
     background-color:#836539;
 }
 #third-circle{
-    top:calc(440px + var(--scoreboard-size));
-    left:300px;
+    top:calc(210px + var(--scoreboard-size));
+    left:386px;
     border-radius:1% 1% 100% 1%;
 }
 #first-circle{
-    top:calc(440px + var(--scoreboard-size));
-    left:642px;
+    top:calc(210px + var(--scoreboard-size));
+    left:550px;
     border-radius:100% 1% 1% 1%;
 }
 #second-circle{
-    top:calc(275px + var(--scoreboard-size));
+    top:calc(125px + var(--scoreboard-size));
     left:470px;
     border-radius:1% 1% 1% 100%;
 }
@@ -158,7 +154,7 @@
       -6px -6px red,
       6px -6px red;*/
     opacity: 1.0; /* Needed so that opacity for pulse doesn't cause issues */
-    top: calc(670px + var(--scoreboard-size));
+    top: calc(328px + var(--scoreboard-size));
 }
 #batters-box-right{
     box-shadow: 6px 0 #836539; /* Cover up the base line */
@@ -170,10 +166,10 @@
 }
 #batting-circle{ 
     position:absolute;
-    top:calc(634px + var(--scoreboard-size));
-    left:440px;
-    height:100px;
-    width:100px;
+    top:calc(307px + var(--scoreboard-size));
+    left:452px;
+    height:75px;
+    width:75px;
     border-radius:100% 100% 100% 100%;
    -webkit-transform: rotate(-45deg);
      border:1px solid #836539;

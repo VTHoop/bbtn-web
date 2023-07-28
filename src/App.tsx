@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(() => {
     const url =
-      "http://localhost:8000/games/e7916921-daa0-47ac-a713-57cbea2e7c24";
+      "http://localhost:8000/games/6a3d6771-c18e-4f74-bafe-46e26c2c244e";
     const options = {
       method: "GET",
       headers: {
@@ -51,7 +51,7 @@ const App = () => {
     const { batterGuess, pitcherGuess, batter, pitcher } = atBat;
     if (batterGuess !== -1 && pitcherGuess !== -1) {
       const url =
-        "http://localhost:8000/games/e7916921-daa0-47ac-a713-57cbea2e7c24/at-bat";
+        "http://localhost:8000/games/6a3d6771-c18e-4f74-bafe-46e26c2c244e/at-bat";
       const options = {
         method: "POST",
         headers: {
