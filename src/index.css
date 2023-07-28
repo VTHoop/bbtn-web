@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --scoreboard-size: 350px;
+  --scoreboard-size: 450px;
 }
 
 body {

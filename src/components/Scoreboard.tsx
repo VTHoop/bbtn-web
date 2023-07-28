@@ -17,7 +17,6 @@ export const Scoreboard = ({ game, onPlay }: ScoreboardProps) => {
   return (
     <>
       <div className="game-details flex-[0_0_100%]">
-        <h1 className="text-3xl font-bold text-center">BBTN</h1>
         <div className="teams flex">
           <div className="team flex-auto basis-2/5 text-center p-4">
             <div className="text-xl font-bold team__text">AWAY</div>
